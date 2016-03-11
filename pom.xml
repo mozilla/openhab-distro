@@ -22,8 +22,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/openhab/openhab-distro.git</connection>
-        <developerConnection>scm:git:https://github.com/openhab/openhab-distro.git</developerConnection>
+        <connection>scm:git:https://github.com/mozilla/openhab-distro.git</connection>
+        <developerConnection>scm:git:https://github.com/mozilla/openhab-distro.git</developerConnection>
         <url>https://github.com/openhab/openhab-distro</url>
     </scm>
 
