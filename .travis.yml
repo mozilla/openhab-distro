@@ -1,9 +1,12 @@
-# openHAB travis.yml
 branches:
   only:
-    - master
-
+  - master
 language: java
-
 jdk:
-  - oraclejdk8
+- oraclejdk8
+deploy:
+  provider: bintray
+  file: descriptor.json
+  user: vaani
+  key:
+    secure: XfJcsfo35pTMjuKLOFQ2rEy+A9sWxtaP3yk7+i2kHWOtjn6EYr12Me0wh2sTdkNJZgxHBGodReETLgAgM3ZrleWZCsTg1YGXzkzoDFMi8VGDII+YjRuxu3IOJ+154G5IQEcHaxjWvESpYjTEoasf31yrcWIGikFrw0WXSPMd2+Qoyk4icW3pTLgGj283Q0117OGsynmpMzZ3C6GSMIQN1Ut6FdG4Fm3EFYLAP2XaL3W8GSEbl2qKcBYHC9I+CauGFLj2l84f+IQ1g9zz0AWP3Yi3ci4Q3/QsbU3S090ONqBKZuEBq1kl/MUt/o7G+n2npBk4RMDo+8SvpHtUWhmTrB3AqUqqOS1TcVnHOxZlegkh4vh5dIEa9tuk8BXc/9GCzryJwjRbNaOeOED8loZeT+G4MQ4boTbvZB2Mhb6Ua1lIc6yUjYcVn/Yu2NGTFgZ0Ai2Pkg9I9k2H58Q1JMN1aF/E+GEWUvhZtvjupBkIkwQzLZBdwxaQFKQTrRfC/b6HTvEQW7TD9N94TPjauWfdsorscSO1M2zX2L7Fi6YnZ1oTf41M84y5o0thtC5e4Svfr1f3R/e5YiQfzgLFI+sEpH9KQXuzLfxAfDq3jmfrb1kcMkmG1a+h+nsGSnXi9AeWI/nod19bd2WKyPGkJmw1inuCZQgHXd6SMaYgAXJp5io=
