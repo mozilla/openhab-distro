@@ -1,9 +1,37 @@
-# openHAB travis.yml
-branches:
-  only:
-    - master
+install:
+- wget http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+- tar xzf apache-maven-3.3.9-bin.tar.gz
+- curl -s -L https://github.com/mozilla/openhab2-addons/releases/latest | egrep -o /mozilla/openhab2-addons/releases/download/.*/m2repository.tar.gz | wget --base=http://github.com/ -i -
+- tar xf m2repository.tar.gz -C $HOME/.m2/repository/
 
-language: java
+before_script:
+- rm $HOME/.m2/settings.xml
+- export MAVEN_OPTS="-Dmaven.artifact.threads=3 -Xmx2469m -XX:MaxPermSize=512m"
+
+script:
+- MAVEN_SKIP_RC=true apache-maven-3.3.9/bin/mvn install -fae -B 2>&1 | ./filter.py ; test ${PIPESTATUS[0]} -eq 0
+
+sudo: required
+
+dist: trusty
+
+before_cache:
+- rm -rf $HOME/.m2/repository/org/openhab/distro
+
+cache:
+  directories:
+  - $HOME/.m2
 
 jdk:
-  - oraclejdk8
+- openjdk8
+
+deploy:
+  provider: releases
+  api_key:
+    secure: hQqgDr73M6+NpB1t2XUlqlXjoYa6vNzlu9XoLs74wEMmoK4JTdncjJKEKigagH7egpuvuKqE5Ig8D7oCF4LFiMZDlmEYUy3eqQqkd6+8uNiJDkuP0I3RG3bKx/RGa1SxWn3CbFCte5lN31WGKiGgKcaylysrtgvYF0JHoMIl1Ny176MiP2YrebyCVcuXbDY8oHQChdyaHnw2RCZrQryIwKfDEnHu+VQgz23LzkC/KRO6hMUNEj8K/Xmnqmm0qbTj0yC5wcq47NnS6hXy6uQlmyNSt3bnzp8WkxillLivLPx1uB5jkwzXjWj7OkqJpgjtpkjfcgOlfSM6/RTH1/fiICoHE47c8FN5XFaKNIORzPDzZACmn7ifEI9/SHEBPb6c1D9CmBgdaHXLCd0CGscrYB8DnCxiUs7ZRnhEZO5s7Yh5kP6DCuJYCzPvkttWFYyNs0cE97TM5Le8bll9LD1rqPe3E3mQhe/2U4cOW7h10lqXQUub+o+L48mYTxxm0Wik4aZO1ERngH+QzvgfmTnc9hVCekxxRmN5PXwonI60BFdOUV9+I65UtpInsBCgoDMc2FP+psGfatAyc7Ku2IDeMmvWYu/h286LK1C/Z8qxThfTG2apn9P9UOQYvWNAEboQ1D623Dqpa5CkFORonMJzjioThx+0Ihwc6JAQUMPSFYE=
+  file: distributions/openhab-online/target/openhab-online-2.0.0-SNAPSHOT.zip
+  skip_cleanup: true
+  on:
+    repo: mozilla/openhab-distro
+    branch: vaanii
+    tags: true
